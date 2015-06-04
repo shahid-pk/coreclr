@@ -12,6 +12,12 @@ if(CMAKE_SYSTEM_NAME STREQUAL FreeBSD)
 elseif(NOT CMAKE_SYSTEM_NAME STREQUAL Darwin)
   set(CMAKE_REQUIRED_DEFINITIONS "-D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809L")
 endif()
+
+if(TARGET_ARCH_ARM32)
+    set(CMAKE_REQUIRED_INCLUDES "/opt/android-ndk-r10d/sources/cxx-stl/llvm-libc++abi/libcxxabi/include/")
+endif()
+
+set(CMAKE_REQUIRED_INCLUDES "/usr/local/include" "/usr/include")
 check_include_files(ieeefp.h HAVE_IEEEFP_H)
 check_include_files(alloca.h HAVE_ALLOCA_H)
 check_include_files(sys/vmparam.h HAVE_SYS_VMPARAM_H)
@@ -22,7 +28,13 @@ check_include_files(crt_externs.h HAVE_CRT_EXTERNS_H)
 check_include_files(sys/time.h HAVE_SYS_TIME_H)
 check_include_files(pthread_np.h HAVE_PTHREAD_NP_H)
 check_include_files(sys/lwp.h HAVE_SYS_LWP_H)
-check_include_files(libunwind.h HAVE_LIBUNWIND_H)
+
+if(TARGET_ARCH_ARM32)
+    check_include_files(/opt/android-ndk-r10d/sources/cxx-stl/llvm-libc++abi/libcxxabi/include/libunwind.h HAVE_LIBUNWIND_H)
+else()
+    check_include_files(libunwind.h HAVE_LIBUNWIND_H)
+endif()
+
 check_include_files(runetype.h HAVE_RUNETYPE_H)
 
 check_function_exists(kqueue HAVE_KQUEUE)

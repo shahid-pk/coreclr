@@ -10,6 +10,10 @@ add_definitions(-DDBG_TARGET_WIN64=1)
 set(ENABLE_LLDBPLUGIN ${CLR_CMAKE_PLATFORM_UNIX} CACHE BOOL "Enable building the SOS plugin for LLDB.")
 set(REQUIRE_LLDBPLUGIN ${CLR_CMAKE_PLATFORM_LINUX} CACHE BOOL "Require building the SOS plugin for LLDB.")
 
+if(CLR_CMAKE_PLATFORM_UNIX_TARGET_ARM32)
+  return()
+endif()
+
 set(WITH_LLDB_LIBS "" CACHE PATH "Path to LLDB libraries")
 set(WITH_LLDB_INCLUDES "" CACHE PATH "Path to LLDB headers")
 

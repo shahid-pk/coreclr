@@ -4,30 +4,30 @@
 #
 
 # Set up the environment to be used for building with clang.
-export CC="$(arm-linux-androideabi-gcc)"
-export CXX="$(arm-linux-androideabi-g++)"
+export CC="$(which arm-linux-gnueabihf-gcc)"
+export CXX="$(which arm-linux-gnueabihf-g++)"
 
 # Possible build types are DEBUG, RELEASE, RELWITHDEBINFO, MINSIZEREL.
 # Default to DEBUG
-if [ -z "$3" ]
+if [ -z "$2" ]
 then
   echo "Defaulting to DEBUG build."
   buildtype="DEBUG"
 else
-  buildtype="$3"
+  buildtype="$2"
 fi
 
-arm_gcc_ar="$(which arm-linux-androideabi-ar)"
-[[ $? -eq 0 ]] || { echo "Unable to locate ar"; exit 1; }
-arm_gcc_link="$(which arm-linux-androideabi-ld)"
-[[ $? -eq 0 ]] || { echo "Unable to locate arm-linux-androideabi-ld"; exit 1; }
-arm_gcc_nm="$(which arm-linux-androideabi-nm)"
-[[ $? -eq 0 ]] || { echo "Unable to locate arm-linux-androideabi-nm"; exit 1; }
-arm_gcc_ranlib="$(which arm-linux-androideabi-ranlib)"
-[[ $? -eq 0 ]] || { echo "Unable to arm-linux-androideabi-ranlib"; exit 1; }
+arm_gcc_ar="$(which arm-linux-gnueabihf-ar)"
+[[ $? -eq 0 ]] || { echo "Unable to locate arm-linux-gnueabihf-ar"; exit 1; }
+arm_gcc_link="$(which arm-linux-gnueabihf-ld)"
+[[ $? -eq 0 ]] || { echo "Unable to locate arm-linux-gnueabihf-ld"; exit 1; }
+arm_gcc_nm="$(which arm-linux-gnueabihf-nm)"
+[[ $? -eq 0 ]] || { echo "Unable to locate arm-linux-gnueabihf-nm"; exit 1; }
+arm_gcc_ranlib="$(which arm-linux-gnueabihf-ranlib)"
+[[ $? -eq 0 ]] || { echo "Unable to locate arm-linux-gnueabihf-ranlib"; exit 1; }
 if [ $OS = "Linux" -o $OS = "FreeBSD" -o $OS = "OpenBSD" -o $OS = "NetBSD" ]; then
-  arm_gcc_objdump="$(which arm-linux-androideabi-objdump)"
-  [[ $? -eq 0 ]] || { echo "Unable to locate arm-linux-androideabi-objdump"; exit 1; }
+  arm_gcc_objdump="$(which arm-linux-gnueabihf-objdump)"
+  [[ $? -eq 0 ]] || { echo "Unable to locate arm-linux-gnueabihf-objdump"; exit 1; }
 fi
 
 cmake_extra_defines=
@@ -39,7 +39,7 @@ if [[ -n "$LLDB_INCLUDE_DIR" ]]; then
 fi
   
 cmake \
-  "-DCMAKE_USER_MAKE_RULES_OVERRIDE=$1/src/pal/tools/clang-compiler-override.txt" \
+  "-DCMAKE_USER_MAKE_RULES_OVERRIDE=$1/src/pal/tools/gcc-compiler-override.txt" \
   "-DCMAKE_AR=$arm_gcc_ar" \
   "-DCMAKE_LINKER=$arm_gcc_link" \
   "-DCMAKE_NM=$arm_gcc_nm" \

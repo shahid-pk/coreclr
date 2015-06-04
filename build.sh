@@ -46,7 +46,7 @@ check_prereqs()
     hash cmake 2>/dev/null || { echo >&2 "Please install cmake before running this script"; exit 1; }
     
     if [ "$__BuildArch" == "arm" ]; then
-        hash arm-linux-androideabi-gcc 2>/dev/null || { echo >&2 "Please install arm-linux-androideabi-gcc package before running this                 script"; exit 1; }
+        hash arm-linux-gnueabihf-gcc 2>/dev/null || { echo >&2 "Please install gcc-arm-linux-gnueabihf package before running this           script"; exit 1; }
     else
     # Check for clang
     hash clang-$__ClangMajorVersion.$__ClangMinorVersion 2>/dev/null ||  hash clang$__ClangMajorVersion$__ClangMinorVersion 2>/dev/null ||   hash clang 2>/dev/null || { echo >&2 "Please install clang before running this script"; exit 1; }
@@ -64,7 +64,7 @@ build_coreclr()
     # Regenerate the CMake solution
     if [ "$__BuildArch" == "arm" ]; then
          echo "Invoking cmake with arguments: \"$__ProjectRoot\" $__CMakeArgs"
-        "$__ProjectRoot/src/pal/tools/gen-buildsys-arm-gcc.sh" "$__ProjectRoot" $__CMakeArgs $__BuildType
+        "$__ProjectRoot/src/pal/tools/gen-buildsys-arm-gcc.sh" "$__ProjectRoot" $__CMakeArgs
     else
         echo "Invoking cmake with arguments: \"$__ProjectRoot\" $__CMakeArgs"
         "$__ProjectRoot/src/pal/tools/gen-buildsys-clang.sh" "$__ProjectRoot" $__ClangMajorVersion $__ClangMinorVersion $__CMakeArgs
