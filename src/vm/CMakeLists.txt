@@ -387,6 +387,8 @@ else()
             ${ARCH_SOURCES_DIR}/crthelpers.S
             ${ARCH_SOURCES_DIR}/pinvokestubs.S
         )
+    elseif(CLR_CMAKE_PLATFORM_ARCH_I386)
+        # TODO: Implement this for Linux x86
     endif()
     
 endif(WIN32)

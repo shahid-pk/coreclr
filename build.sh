@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-usage()
+usage(
 {
     echo "Usage: $0 [BuildArch] [BuildType] [clean] [verbose] [coverage] [cross] [clangx.y] [skipcoreclr] [skipmscorlib] [skiptests]"
-    echo "BuildArch can be: x64, ARM"
+    echo "BuildArch can be: x64, ARM, x86"
     echo "BuildType can be: Debug, Release"
     echo "clean - optional argument to force a clean build."
     echo "verbose - optional argument to enable verbose build output."
@@ -180,6 +180,7 @@ __ProjectRoot="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 __BuildArch=x64
 # Use uname to determine what the OS is.
 OSName=$(uname -s)
+BuildArch=$(uname -p) 
 case $OSName in
     Linux)
         __BuildOS=Linux
@@ -206,7 +207,27 @@ case $OSName in
         __BuildOS=Linux
         ;;
 esac
-__MSBuildBuildArch=x64
+
+# use uname to determine processor arch Processor arch 
+case $BuildArch in
+    i686)
+        __BuildArch=x86
+        ;;
+    x86_64)
+        __BuildArch=x64
+        ;;
+    armv7l)
+        __BuildArch=arm
+        ;;
+    aarch64)
+        __BuildArch=arm64
+        ;;
+    *)
+        echo "Unsupported Processor Architecture $BuildArch detected, configuring as if for x64"
+        __BuildArch=x64
+        ;;
+esac
+__MSBuildBuildArch="$__BuildArch"
 __BuildType=Debug
 __CodeCoverage=
 __IncludeTests=Include_Tests
@@ -250,6 +271,10 @@ for i in "$@"
         arm64)
         __BuildArch=arm64
         __MSBuildBuildArch=arm64
+        ;;
+        x86)
+        __BuildArch=x86
+        __MSBuildBuildArch=x86
         ;;
         debug)
         __BuildType=Debug

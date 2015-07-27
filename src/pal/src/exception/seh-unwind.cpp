@@ -175,6 +175,7 @@ static void GetContextPointer(unw_cursor_t *cursor, unw_context_t *unwContext, i
 #endif
 }
 
+
 static void GetContextPointers(unw_cursor_t *cursor, unw_context_t *unwContext, KNONVOLATILE_CONTEXT_POINTERS *contextPointers)
 {
 #if defined(_AMD64_)

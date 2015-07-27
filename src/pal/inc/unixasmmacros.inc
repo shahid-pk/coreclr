@@ -38,4 +38,6 @@
 #include "unixasmmacrosarm.inc"
 #elif defined(_ARM64_)
 #include "unixasmmacrosarm64.inc"
+#elif defined(_i386_)
+#include "unixasmmacrosi386.inc"
 #endif

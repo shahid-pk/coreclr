@@ -95,6 +95,15 @@ elseif(CLR_CMAKE_PLATFORM_ARCH_ARM64)
     unwindarm.cpp
     unwindarm64.cpp
   )
+elseif(CLR_CMAKE_PLATFORM_ARCH_I386)
+  set( ARCH_SOURCES
+    emit.cpp
+    targetx86.cpp
+    lower.cpp
+    codegenlegacy.cpp
+    unwind.cpp
+  )
+  add_definitions(-DLEGACY_BACKEND)
 else()
   clr_unknown_arch()
 endif()
